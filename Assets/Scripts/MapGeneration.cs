@@ -7,54 +7,17 @@ public class MapGeneration : MonoBehaviour
     int MapSizeY = 30;
     void Start()
     {
-        //GenerateNewMap();
         int[,] map = LoadMap();
-        GetComponent<MeshFilter>().mesh = GenerateMeshFromMap(map);
+        GlobalData.Map = map;
+        GetComponent<MeshFilter>().mesh = MeshGeneration.GenerateMeshFromMap(map);
     }
 
     public void GenerateNewMap()
     {
         int[,] map = GenerateNewMap(35);
+        GlobalData.Map = map;
         SaveMap(map);
-        GetComponent<MeshFilter>().mesh = GenerateMeshFromMap(map);
-    }
-
-    Mesh GenerateMeshFromMap(int[,] map)
-    {
-        List<Vector3> vertices = new List<Vector3>();
-        List<int> triangles = new List<int>();
-        Mesh mesh = new Mesh();
-        int index = 0;
-
-        for (int i = 0; i < map.GetLength(0); i++)
-        {
-            for (int j = 0; j < map.GetLength(1); j++)
-            {
-                if (map[i, j] == 0)
-                {
-                    int pointX = i - map.GetLength(0) / 2;
-                    int pointY = j - map.GetLength(1) / 2;
-                    vertices.Add(new Vector3(0.1f + pointX, 0, 0.1f + pointY));
-                    vertices.Add(new Vector3(0.1f + pointX, 0, 0.9f + pointY));
-                    vertices.Add(new Vector3(0.9f + pointX, 0, 0.1f + pointY));
-                    vertices.Add(new Vector3(0.9f + pointX, 0, 0.9f + pointY));
-
-                    triangles.Add(0 + index);
-                    triangles.Add(1 + index);
-                    triangles.Add(2 + index);
-                    triangles.Add(2 + index);
-                    triangles.Add(1 + index);
-                    triangles.Add(3 + index);
-
-                    index += 4;
-                }
-            }
-        }
-
-        mesh.vertices = vertices.ToArray();
-        mesh.triangles = triangles.ToArray();
-
-        return mesh;
+        GetComponent<MeshFilter>().mesh = MeshGeneration.GenerateMeshFromMap(map);
     }
 
     int[,] LoadMap()
