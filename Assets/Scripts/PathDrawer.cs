@@ -113,7 +113,7 @@ public class PathDrawer : MonoBehaviour
         cells = null;
         remainingSteps = DistanceToMove;
         round = 0;
-        roundText.text = (++round).ToString();
+        roundText.text = (round).ToString();
         lastPoint = new Point(-1, 0);
         zoneMesh.mesh = new Mesh();
         AreaMap = null;

@@ -7,11 +7,17 @@ public class MapGeneration : MonoBehaviour
     int MapSizeY = 30;
     void Start()
     {
-        int[,] map = LoadMap();
-        GlobalData.Map = map;
-        GetComponent<MeshFilter>().mesh = MeshGeneration.GenerateMeshFromMap(map);
+        try
+        {
+            int[,] map = LoadMap();
+            GlobalData.Map = map;
+            GetComponent<MeshFilter>().mesh = MeshGeneration.GenerateMeshFromMap(map);
+        }
+        catch
+        {
+            GenerateNewMap();
+        }
     }
-
     public void GenerateNewMap()
     {
         int[,] map = GenerateNewMap(35);
